@@ -1,1 +1,18 @@
-# Choosing-a-team
+# CSCI-B 551 Elements of Artficial Intelligence
+
+### Choosing-a-team
+
+### Problem Statement
+In the dystopian future, AI will have taken over most labor and leadership positions. As a student in B551, you will assemble teams of robots to do the assignments for you. SICE will have a set of available robots for you to choose from. Each robot i will have an hourly rate Pi and a skill level Si. You’ll want to choose a team of robots that has the greatest possible skill (i.e., the sum of the skill levels is as high as possible), but you have a ﬁxed budget of just B Intergalactic EuroYuanDollars (EYDs).
+Your job is to write a program that assembles as skilled a team as possible but using only whole robots, and whose total cost is less than or equal to the budget.
+
+### Implementation
+We have employed the code using standard branch and bound methodology. This part can be solved using various approaches like dynamic programming or brute force at the least. The downsides of dynamic programming is, it doesn't work well with floating point values of rates or skills or budget. On the other hand, brute force approach is pretty simple approach and doesn't use any search techniques used in the coursework. The drawback of brute force is its high time complexity, as the no of people increases, complexity also increases. Hence, we didn't use the mentioned algorithms in the code. Branch and bound is a great all-round algorithm which works given any type of variable (integer/ float/ double). The start state is the first element after arranging the robots in decreasing order of (skill/rate) ratio. The successor function is any node whose bound is greater than maximum skill. The state space consists of all the comibnation of robot teams. The goal state is the team consisting of the highest skill and using the provided budget to the optimized value.
+
+### Search Algorithm working
+
+The specific type of branch and bound used by us is BFS branch and bound. For each node, if the current rate is less than the budget and current skill is greater than maximum skill, then we are updating the maximum skill. Similiarly, if the upper bound is greater, we are updating the maximum skill and pushing that node to the queue for further traversal. This process is repeated for each node which will compute the skill of every child i.e we are exploring all the nodes stored in the queue. 
+
+### Previous(discarded) approach
+
+We used dynamic programming for such kind of optimization problems (known as knapsack problem). First, a table is created and maintained throughout the execution which keeps filling as per the working on the algorithm and provides the most efficient combination at the end of the table. The table is filled with the robot rate and skill as and when it is considered w.r.t. budget. When the table is generated, the efficient robot combination is tracked by parsing through the table and the output is provided. The state space consists of all the explored team combinations which are possible until the budget is reached. The successor function is the team which is chosen until the moment as per the remaining budget and maximum skill.  There are two approaches when a robot is available- either you choose the robot or you don’t choose the robot. According to each condition, the maximum value of the subset corresponding to each approach is chosen and processed in the form of a tree. The two values are: 1. Maximum value obtained by n-1 robot and B budget (excluding nth robot) 2. Value of nth robot plus maximum value obtained by n-1 robots and B minus budget of the nth robot (including nth robot). If rate of nth robot is greater than B, then the nth robot cannot be included and case 1 is the only possibility.
